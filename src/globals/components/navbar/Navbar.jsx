@@ -1,5 +1,8 @@
+import { useSelector } from "react-redux"
 
 export default function Navbar() {
+    const items = useSelector((state)=>state.cart)
+    // console.log(items)
   return (
     <nav className="fixed z-10 w-full bg-white md:absolute md:bg-transparent">
             <div className="container m-auto px-2 md:px-12 lg:px-7">
@@ -31,7 +34,7 @@ export default function Navbar() {
                                 </li>
                                 <li>
                                     <a href="#" className="block md:px-4 transition hover:text-yellow-700">
-    <span>Cart</span>
+    <span>Cart<sup>{items.length}</sup></span>
                                     </a>
                                 </li>
                             </ul>

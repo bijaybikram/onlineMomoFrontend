@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Footer from '../../../globals/components/footer/Footer'
 import { useDispatch, useSelector } from 'react-redux'
 import { add } from '../../../store/cartSlice'

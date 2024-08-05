@@ -27,7 +27,7 @@ export function registerUser(data) {
     dispatch(setStatus(STATUSES.LOADING));
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/registfer",
+        "http://localhost:3000/api/auth/register",
         data
       );
       dispatch(setUser(response.data.data));

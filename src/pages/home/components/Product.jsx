@@ -25,7 +25,6 @@ const Product = () => {
   return (
     <>
     <div className="relative w-full"> 
-     
         <div className="relative bg-white-50">
             <div className="container m-auto px-6 pt-32 md:px-12 lg:pt-[4.8rem] lg:px-7">
         {/* <!-- component --> */}

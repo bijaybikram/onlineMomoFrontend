@@ -45,9 +45,9 @@ const Register = () => {
       dispatch(setStatus(STATUSES.LOADING)) // setting the status to loading after the navigation
     } 
     if (status === STATUSES.ERROR) {
-      navigate("/register");
-      dispatch(setStatus(STATUSES.LOADING)) // setting the status to loading after the navigation
-      // alert("Something Went Wrong, Try again")
+      // navigate("/register");
+      // dispatch(setStatus(STATUSES.LOADING)) // setting the status to loading after the navigation
+      alert("Something Went Wrong, Try again")
       // return;
     }
   }, [status, navigate]);

@@ -9,6 +9,7 @@ import Home from './pages/home/Home'
 import Login from './pages/auth/login/Login'
 import Cart from './pages/cart/Cart'
 import Register from './pages/auth/register/Register'
+import Product from './pages/home/components/Product'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Home/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
+          <Route path="/products" element={<Product/>} />
           <Route path="/cart" element={<Cart/>} />
         </Routes>
       </BrowserRouter>

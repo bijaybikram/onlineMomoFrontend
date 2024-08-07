@@ -3,9 +3,11 @@ import Footer from '../../../globals/components/footer/Footer'
 import { useDispatch, useSelector } from 'react-redux'
 import { add } from '../../../store/cartSlice'
 import { fetchProducts } from '../../../store/productSlice'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Product = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const {data: products, status} = useSelector((state)=> state.product)
     useEffect(()=> {
@@ -32,7 +34,8 @@ const Product = () => {
         <div className="flex flex-row flex-wrap -mx-2">  
         {products.map((product) => {
             return(
-                <div key={product._id} className="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                // <Link to={"/details/" + product._id}>
+                <div onClick={() => navigate(`productdetails/${product._id}`)} key={product._id} className="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
                 <img className="h-48 w-full object-cover object-center" src={product.productImage} alt="Product Image" />
                 <div className="p-4">
                     <h2 className="mb-2 text-lg font-medium dark:text-white text-gray-900">{product.productName}</h2>
@@ -46,6 +49,7 @@ const Product = () => {
                 </div>
                 </div>
                 </div>
+                // </Link>
             )
         })}
         </div>

@@ -1,12 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { STATUSES } from "../globals/misc/Statuses";
+import API from "../http";
 
 const productSlice = createSlice({
   name: "product",
   initialState: {
     data: [],
-    status: STATUSES.SUCCESS,
+    status: STATUSES.LOADING,
+    selectedProduct: {},
   },
   reducers: {
     setProducts(state, action) {
@@ -14,6 +15,9 @@ const productSlice = createSlice({
     },
     setStatus(state, action) {
       state.status = action.payload;
+    },
+    setSelectedProduct(state, action) {
+      state.selectedProduct = action.payload;
     },
   },
   // extraReducers: (builder) => {
@@ -31,7 +35,8 @@ const productSlice = createSlice({
   // },
 });
 
-export const { setProducts, setStatus } = productSlice.actions;
+export const { setProducts, setStatus, setSelectedProduct } =
+  productSlice.actions;
 
 export default productSlice.reducer;
 
@@ -41,13 +46,30 @@ export default productSlice.reducer;
 //   return data;
 // });
 
+// Fetching all products
 export function fetchProducts() {
   return async function fetchProductThunk(dispatch, getState) {
     dispatch(setStatus(STATUSES.LOADING));
     try {
-      const response = await axios.get("http://localhost:3000/api/products");
+      const response = await API.get("/products");
       dispatch(setProducts(response.data.data));
       dispatch(setStatus(STATUSES.SUCCESS));
+    } catch (error) {
+      console.log(error);
+      dispatch(setStatus(STATUSES.ERROR));
+    }
+  };
+}
+
+// Fetching single product
+export function fetchProductDetails(productId) {
+  return async function fetchProductDetailsThunk(dispatch, getState) {
+    dispatch(setStatus(STATUSES.LOADING));
+    try {
+      const response = await API.get(`/products/${productId}`);
+      dispatch(setSelectedProduct(response.data.data));
+      dispatch(setStatus(STATUSES.SUCCESS));
+      // console.log(response.data.data);
     } catch (error) {
       console.log(error);
       dispatch(setStatus(STATUSES.ERROR));

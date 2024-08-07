@@ -34,7 +34,7 @@ const Login = () => {
   useEffect(()=> {
     if(status == STATUSES.SUCCESS){
       localStorage.setItem("token", token)
-      navigate("/products")
+      navigate("/")
       dispatch(setStatus(STATUSES.LOADING))
 
     }

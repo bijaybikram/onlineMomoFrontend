@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
-import Footer from '../../../globals/components/footer/Footer'
 import { useDispatch, useSelector } from 'react-redux'
-import { add } from '../../../store/cartSlice'
 import { fetchProducts } from '../../../store/productSlice'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Product = () => {
     const dispatch = useDispatch()
@@ -14,9 +12,9 @@ const Product = () => {
         dispatch(fetchProducts())
     },[])
 
-    const addToCart = (product) => {
-        dispatch(add(product))
-    }
+    // const addToCart = (product) => {
+    //     dispatch(add(product))
+    // }
 
     if(status == "loading"){
        return <h1>Loading...</h1>
@@ -45,7 +43,7 @@ const Product = () => {
                     {/* <p className="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
                     <p className="ml-auto text-base font-medium text-green-500">20% off</p> */}
                     <p className="text-base  font-medium text-gray-500 dark:text-gray-300">{product.productStatus}</p>
-                    <button onClick={() => {addToCart(product)}} className="px-4 py-2 bg-blue-800 mx-6 text-white text-xs font-bold uppercase rounded">Add to Cart</button>
+                    {/* <button onClick={() => {addToCart(product)}} className="px-4 py-2 bg-blue-800 mx-6 text-white text-xs font-bold uppercase rounded">Add to Cart</button> */}
                 </div>
                 </div>
                 </div>
@@ -56,7 +54,6 @@ const Product = () => {
         </div>  
         </div>
     </div>
-    <Footer/>
     </>
   )
 }

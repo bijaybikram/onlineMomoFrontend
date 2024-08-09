@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 const ProductDetails = () => {
 
     const {id} = useParams()
+    window.scrollTo(0, 0);
     // console.log(id)
 
   return (

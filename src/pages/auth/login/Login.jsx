@@ -28,14 +28,15 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(loginUser(userData))
-    console.log({token})
+    // console.log({token})
   }
 
   useEffect(()=> {
     if(status == STATUSES.SUCCESS){
-      localStorage.setItem("token", token)
+      
       navigate("/")
       dispatch(setStatus(STATUSES.LOADING))
+      // console.log(localStorage.token, "huhu")
 
     }
     if(status == STATUSES.ERROR){
@@ -53,7 +54,7 @@ const Login = () => {
       {/* <!-- component --> */}
       <div className="bg-yellow-400 h-screen overflow-hidden flex items-center justify-center">
         <div className="bg-white lg:w-5/12 md:6/12 w-10/12 shadow-3xl">
-        <h3>Hello, {data.userName}</h3>
+        {/* <h3>Hello</h3> */}
           <div className="bg-gray-800 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full p-4 md:p-8">
           
             <svg width="32" height="32" viewBox="0 0 24 24" fill="#FFF">

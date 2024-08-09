@@ -7,7 +7,7 @@ const Review = ({id: productId}) => {
     const {selectedProduct , status} = useSelector((state)=> state.product)
     
     const {productReviews} = selectedProduct
-    console.log(productReviews, "hell 111111o")
+    // console.log(productReviews, "hell 111111o")
     const dispatch = useDispatch()  
     
     useEffect(()=> {

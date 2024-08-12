@@ -11,6 +11,7 @@ import Register from './pages/auth/register/Register'
 import Product from './pages/home/components/Product'
 import ProductDetails from './pages/productDetails/ProductDetails'
 import Footer from './globals/components/footer/Footer'
+import Checkout from './pages/checkout/Checkout'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/products" element={<Product/>} />
           <Route path="/cart" element={<Cart/>} />
           <Route path="/productdetails/:id" element={<ProductDetails/>} />
+          <Route path="/checkout" element={<Checkout/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>

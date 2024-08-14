@@ -97,7 +97,7 @@ export function deleteCartItem(productId) {
     dispatch(setStatus(STATUSES.LOADING));
     try {
       const response = await APIAuthenticated.delete(`/cart/${productId}`);
-      console.log(response);
+      // console.log(response);
       dispatch(deleteItems({ productId }));
       dispatch(setStatus(STATUSES.SUCCESS));
     } catch (error) {

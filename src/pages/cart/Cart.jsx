@@ -9,9 +9,10 @@ const Cart = () => {
     const {items: products} = useSelector((state)=> state.cart)
     
     const totalItemsInCart = products.reduce((total, item)=> total + item?.quantity, 0  )
-    const totalAmoutOfCart = products.reduce((amount, item)=> amount + item?.quantity * item?.product.productPrice, 0  )
+    const totalAmountOfCart = products.reduce((amount, item)=> amount + item?.quantity * item?.product.productPrice, 0  )
 
     const handleQuantityChange = (productId, newQuantity) => {
+        console.log("hello")
         dispatch(updateCartItem(productId, newQuantity))
     }
 
@@ -72,7 +73,7 @@ const Cart = () => {
             <div className="flex justify-between">
             <p className="text-lg font-bold">Total Price</p>
             <div className="">
-                <p className="mb-1 text-lg font-bold">Rs. {totalAmoutOfCart}</p>
+                <p className="mb-1 text-lg font-bold">Rs. {totalAmountOfCart}</p>
                 <p className="text-sm text-gray-700">including VAT</p>
             </div>
             </div>

@@ -1,20 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // Import from react-flagpack
 import Flag from 'react-flagpack'
 import { useForm } from 'react-hook-form'
 import { createOrder } from '../../store/checkoutSlice'
+import { STATUSES } from '../../globals/misc/Statuses'
+import { useNavigate } from 'react-router-dom'
 
 const Checkout = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const {items: products} = useSelector((state) => state.cart)
+    const {status, data} = useSelector((state)=> state.checkout)
+    console.log(data,"Hola")
 
     const subTotalAmount = products.reduce((amount, item)=> amount + item?.quantity * item?.product.productPrice, 0  )
     const shippingAmount = 100
     const totalAmount = subTotalAmount + shippingAmount
 
     const {register, handleSubmit, formState} = useForm()
-    const [paymentMethod, setPaymentMethod] = useState("COD")
+    const [paymentMethod, setPaymentMethod] = useState("")
     // console.log(paymentMethod)
     const handleOrder = async (data) => {
         const orderDetails = {
@@ -26,10 +31,34 @@ const Checkout = () => {
                 method: paymentMethod
             },
         }
+
         dispatch(createOrder(orderDetails))
-        // console.log(orderDetails,"gairaxa")
 
     }
+
+    const proceedForPayment = () => {
+        const latestOrderData = data?.[data.length -1]
+        console.log(latestOrderData, "haha")
+        if(paymentMethod === "COD" && status === STATUSES.SUCCESS && data.length > 0){
+
+            alert("Order placed succesfully with COD!")
+        }
+        if(paymentMethod === "khalti" && status === STATUSES.SUCCESS && data.length > 0){
+            const {totalAmount, _id} = data[data.length - 1]
+            navigate(`/khalti?orderid=${_id}&totalamount=${totalAmount}`)
+            // alert("Order placed succesfully")
+        }
+
+        if (status === STATUSES.ERROR) {
+            alert("Something went wrong with order checkout!")
+        }
+    }
+
+    useEffect(()=> {
+        console.log("hello ma nigga")
+        proceedForPayment()
+    },[data, status])
+
     const handlePaymentChange = (e)=> {
         // console.log(e.target)
         return setPaymentMethod(e.target.value)
@@ -64,7 +93,7 @@ const Checkout = () => {
             <p className="mt-8 text-lg font-medium">Payment Methods</p>
             <form className="mt-5 grid gap-6">
             <div className="relative">
-                <input className="peer hidden" id="radio_1" type="radio" value="COD" name="radio" onChange={handlePaymentChange} checked={paymentMethod == "COD"}/>
+                <input className="peer hidden" id="radio_1" type="radio" value="COD" name="radio" onChange={handlePaymentChange} checked={paymentMethod === "COD"}/>
                 <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                 <label className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_1">
                 <img className="w-14 object-contain" src="/images/naorrAeygcJzX0SyNI4Y0.png" alt="" />
@@ -74,7 +103,7 @@ const Checkout = () => {
                 </label>
             </div>
             <div className="relative">
-                <input className="peer hidden" id="radio_2" type="radio" value="khalti" name="radio" onChange={handlePaymentChange} checked={paymentMethod == "khalti"}/>
+                <input className="peer hidden" id="radio_2" type="radio" value="khalti" name="radio" onChange={handlePaymentChange} checked={paymentMethod === "khalti"}/>
                 <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                 <label className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_2">
                 <img className="w-14 object-contain" src="/images/oG8xsl3xsOkwkMsrLGKM4.png" alt="" />

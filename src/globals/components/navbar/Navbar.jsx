@@ -7,7 +7,7 @@ import { fetchCart } from "../../../store/cartSlice"
 export default function Navbar() {
 
     const {data: user} = useSelector((state)=> state.auth)
-    // console.log(user,token, "haha")
+    console.log(user, "haha")
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -55,11 +55,13 @@ export default function Navbar() {
     <span>Wishlist</span>
                                     </a>
                                 </li>
-                                <li>
+                                {items.length !== 0 && (
+                                    <li>
                                     <a href="#" onClick={() => navigate("/cart")} className="block md:px-4 transition hover:text-yellow-700">
-    <span>Cart<sup>{items.length}</sup></span>
+    <span>Cart<sup>{(localStorage.getItem("token")== "" || localStorage.getItem("token") == null || localStorage.getItem("token") == undefined)  ? 0 : items.length}</sup></span>
                                     </a>
                                 </li>
+                                )}
                             </ul>
                         </div>
 

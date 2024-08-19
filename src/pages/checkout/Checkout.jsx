@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// Import from react-flagpack
-import Flag from 'react-flagpack'
 import { useForm } from 'react-hook-form'
 import { createOrder } from '../../store/checkoutSlice'
 import { STATUSES } from '../../globals/misc/Statuses'
 import { useNavigate } from 'react-router-dom'
+import { APIAuthenticated } from '../../http'
 
 const Checkout = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {items: products} = useSelector((state) => state.cart)
     const {status, data} = useSelector((state)=> state.checkout)
-    console.log(data,"Hola")
-
     const subTotalAmount = products.reduce((amount, item)=> amount + item?.quantity * item?.product.productPrice, 0  )
     const shippingAmount = 100
     const totalAmount = subTotalAmount + shippingAmount
 
+    // handle form with react-hook-form
     const {register, handleSubmit, formState} = useForm()
+
     const [paymentMethod, setPaymentMethod] = useState("")
-    // console.log(paymentMethod)
+
+    // Function to handle the order for checkout
     const handleOrder = async (data) => {
         const orderDetails = {
             items: products,
@@ -36,17 +36,18 @@ const Checkout = () => {
 
     }
 
+    // to proceed for payment with conditions
     const proceedForPayment = () => {
-        const latestOrderData = data?.[data.length -1]
-        console.log(latestOrderData, "haha")
+        // const latestOrderData = data?.[data.length -1]
+        // console.log(latestOrderData, "haha")
         if(paymentMethod === "COD" && status === STATUSES.SUCCESS && data.length > 0){
 
             alert("Order placed succesfully with COD!")
         }
         if(paymentMethod === "khalti" && status === STATUSES.SUCCESS && data.length > 0){
-            const {totalAmount, _id} = data[data.length - 1]
-            navigate(`/khalti?orderid=${_id}&totalamount=${totalAmount}`)
-            // alert("Order placed succesfully")
+            const {totalAmount, _id: orderId} = data[data.length - 1]
+            handleKhaltiPayment(orderId, totalAmount)
+            console.log(totalAmount, "Total Amount")
         }
 
         if (status === STATUSES.ERROR) {
@@ -55,13 +56,25 @@ const Checkout = () => {
     }
 
     useEffect(()=> {
-        console.log("hello ma nigga")
         proceedForPayment()
+        console.log("hello ma nigga")
     },[data, status])
 
+    // handle change of payment option
     const handlePaymentChange = (e)=> {
-        // console.log(e.target)
         return setPaymentMethod(e.target.value)
+    }
+
+    // handling payment with khalti
+    const handleKhaltiPayment = async (orderId, totalAmount) => {
+        try {
+            const response = await APIAuthenticated.post("/payment/", {orderId, amount: totalAmount})
+            if(response.status === 200){
+                window.location.href = response.data.paymentUrl
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
   return (
@@ -171,7 +184,11 @@ const Checkout = () => {
                 <p className="text-2xl font-semibold text-gray-900">Rs. {totalAmount}</p>
             </div>
             </div>
-            <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Place Order</button>
+            {
+                paymentMethod === "COD" ? (
+                    <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Pay After Delivery</button>
+                ) : (<button className="mt-4 mb-8 w-full rounded-md bg-purple-900 px-6 py-3 font-medium text-white">Pay Online With Khalti</button>)
+            }
         </div>
        </form>
         </div>

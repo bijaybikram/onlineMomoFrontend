@@ -21,6 +21,7 @@ const Khaltisuccess = () => {
             if(response.status === 200){
                 setLoading(false)
                 dispatch(emptyCart())
+                // alert(response.data.message)
                 navigate("/")
                 // window.location.href = "/"
             }

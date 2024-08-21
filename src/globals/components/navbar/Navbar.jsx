@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { logOut } from "../../../store/authSlice"
 import { useEffect } from "react"
 import { fetchCart } from "../../../store/cartSlice"
@@ -46,9 +46,9 @@ export default function Navbar() {
                         <div className="text-gray-600 lg:pr-4">
                             <ul className="space-y-6 tracking-wide font-medium text-sm md:flex md:space-y-0">
                                 <li>
-                                    <a href="#" className="block md:px-4 transition hover:text-yellow-700">
-    <span>Restaurant Menu</span>
-                                    </a>
+                                    <Link to="/profile" className="block md:px-4 transition hover:text-yellow-700">
+    <span>My Profile</span>
+                                    </Link>
                                 </li>
                                 <li>
                                     <a href="#" className="block md:px-4 transition hover:text-yellow-700">

@@ -13,6 +13,7 @@ import ProductDetails from './pages/productDetails/ProductDetails'
 import Footer from './globals/components/footer/Footer'
 import Checkout from './pages/checkout/Checkout'
 import Khaltisuccess from './pages/payment/Khaltisuccess'
+import UserProfile from './pages/profile/UserProfile'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/productdetails/:id" element={<ProductDetails/>} />
           <Route path="/checkout" element={<Checkout/>} />
           <Route path="/khaltisuccess" element={<Khaltisuccess/>} />
+          <Route path="/profile" element={<UserProfile/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>

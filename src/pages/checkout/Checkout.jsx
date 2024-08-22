@@ -5,6 +5,7 @@ import { createOrder } from '../../store/checkoutSlice'
 import { STATUSES } from '../../globals/misc/Statuses'
 import { useNavigate } from 'react-router-dom'
 import { APIAuthenticated } from '../../http'
+import { emptyCart } from '../../store/cartSlice'
 
 const Checkout = () => {
     const navigate = useNavigate()
@@ -43,6 +44,8 @@ const Checkout = () => {
         if(paymentMethod === "COD" && status === STATUSES.SUCCESS && data.length > 0){
 
             alert("Order placed succesfully with COD!")
+            navigate("/")
+            dispatch(emptyCart())
         }
         if(paymentMethod === "khalti" && status === STATUSES.SUCCESS && data.length > 0){
             const {totalAmount, _id: orderId} = data[data.length - 1]

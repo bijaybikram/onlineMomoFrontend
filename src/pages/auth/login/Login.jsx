@@ -9,6 +9,7 @@ const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {data, status, token} = useSelector((state) => state.auth)
+  // console.log(data)
   
   
 
@@ -31,21 +32,21 @@ const Login = () => {
     // console.log({token})
   }
 
-  useEffect(()=> {
-    if(status == STATUSES.SUCCESS){
+  // useEffect(()=> {
+  //   if(status == STATUSES.SUCCESS){
       
-      navigate("/")
-      dispatch(setStatus(STATUSES.LOADING))
-      // console.log(localStorage.token, "huhu")
+  //     // navigate("/")
+  //     dispatch(setStatus(STATUSES.LOADING))
+  //     // console.log(localStorage.token, "huhu")
 
-    }
-    if(status == STATUSES.ERROR){
-      // navigate("/login")
-      alert("Something went wrong, Try again!")
-      // dispatch(setStatus(STATUSES.LOADING))
-    }
+  //   }
+  //   if(status == STATUSES.ERROR){
+  //     // navigate("/login")
+  //     alert("Something went wrong, Try again!")
+  //     // dispatch(setStatus(STATUSES.LOADING))
+  //   }
     
-  },[status, dispatch, navigate])
+  // },[status, dispatch, navigate])
 
 
 

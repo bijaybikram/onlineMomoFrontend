@@ -7,6 +7,7 @@ const checkoutSlice = createSlice({
   initialState: {
     data: [],
     status: STATUSES.LOADING,
+    orders: null,
   },
   reducers: {
     setOrder(state, action) {
@@ -15,10 +16,13 @@ const checkoutSlice = createSlice({
     setStatus(state, action) {
       state.status = action.payload;
     },
+    setOrders(state, action) {
+      state.orders = action.payload;
+    },
   },
 });
 
-export const { setOrder, setStatus } = checkoutSlice.actions;
+export const { setOrder, setStatus, setOrders } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;
 
@@ -30,6 +34,22 @@ export function createOrder(data) {
       const response = await APIAuthenticated.post("/orders/", data);
       //   console.log(response.data);
       dispatch(setOrder(response.data.data));
+      dispatch(setStatus(STATUSES.SUCCESS));
+    } catch (error) {
+      console.log(error);
+      dispatch(setStatus(STATUSES.ERROR));
+    }
+  };
+}
+
+// slice for Order Fetching
+export function fetchOrder() {
+  return async function fetchOrderThunk(dispatch) {
+    dispatch(setStatus(STATUSES.LOADING));
+    try {
+      const response = await APIAuthenticated.get("/orders/");
+      //   console.log(response.data);
+      dispatch(setOrders(response.data.data));
       dispatch(setStatus(STATUSES.SUCCESS));
     } catch (error) {
       console.log(error);

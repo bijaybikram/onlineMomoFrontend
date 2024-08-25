@@ -59,14 +59,17 @@ export function addToCart(productId) {
 // slice for fetching product from cart
 export function fetchCart() {
   return async function fetchCartThunk(dispatch) {
+    const token = localStorage.getItem("token");
     dispatch(setStatus(STATUSES.LOADING));
     try {
-      const response = await APIAuthenticated.get("/cart/");
-      // console.log(response);
-      dispatch(setItems(response.data.data));
-      dispatch(setStatus(STATUSES.SUCCESS));
+      if (token) {
+        const response = await APIAuthenticated.get("/cart/");
+        // console.log(response);
+        dispatch(setItems(response.data.data));
+        dispatch(setStatus(STATUSES.SUCCESS));
+      }
     } catch (error) {
-      console.log(error);
+      console.log(error.response?.data || error.message);
       dispatch(setStatus(STATUSES.ERROR));
     }
   };

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrder } from '../../store/checkoutSlice'
+import { useNavigate } from 'react-router-dom'
 
 const MyOrders = () => {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const {orders} = useSelector((state)=> state.checkout)
     console.log(orders)
@@ -104,8 +106,8 @@ const MyOrders = () => {
                                                                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
                                                                 alt="" />
                                                         </div> */}
-                                                            <div className="ml-3">
-                                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                            <div className="ml-3 cursor-pointer">
+                                                                <p onClick={()=> navigate(`/myorders/${order._id}`)} className="text-blue-900 whitespace-no-wrap">
                                                                     {order._id}
                                                                 </p>
                                                             </div>

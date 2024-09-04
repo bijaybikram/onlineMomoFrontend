@@ -27,7 +27,7 @@ export default function Navbar() {
         dispatch(fetchCart())
     },[dispatch])
   return (
-    <nav className="fixed z-10 w-full bg-white md:absolute md:bg-transparent">
+    <nav className="fixed top-0 z-10 w-full bg-white md:absolute md:bg-transparent">
             <div className="container m-auto px-2 md:px-12 lg:px-7">
                 <div className="flex flex-wrap items-center justify-between py-3 gap-6 md:py-4 md:gap-0">
                     <div className="w-full px-6 flex justify-between lg:w-max md:px-0">

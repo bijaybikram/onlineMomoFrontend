@@ -57,3 +57,19 @@ export function fetchOrder() {
     }
   };
 }
+
+// // slice for Order cancelling
+// export function cancelOrder() {
+//   return async function cancelOrderThunk(dispatch) {
+//     dispatch(setStatus(STATUSES.LOADING));
+//     try {
+//       const response = await APIAuthenticated.patch("/orders/cancel");
+//       //   console.log(response.data);
+//       dispatch(setOrders(response.data.data));
+//       dispatch(setStatus(STATUSES.SUCCESS));
+//     } catch (error) {
+//       console.log(error);
+//       dispatch(setStatus(STATUSES.ERROR));
+//     }
+//   };
+// }

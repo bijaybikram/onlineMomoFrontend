@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-import { logOut } from "../../../store/authSlice"
+import { fetchProfile, logOut } from "../../../store/authSlice"
 import { useEffect } from "react"
 import { fetchCart } from "../../../store/cartSlice"
 
@@ -25,6 +25,7 @@ export default function Navbar() {
 
     useEffect(()=> {
         dispatch(fetchCart())
+        dispatch(fetchProfile())
     },[dispatch])
   return (
     <nav className="fixed top-0 z-10 w-full bg-white md:absolute md:bg-transparent">

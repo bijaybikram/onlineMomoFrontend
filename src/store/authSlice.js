@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { STATUSES } from "../globals/misc/Statuses";
-import { API } from "../http";
+import { API, APIAuthenticated } from "../http";
 
 const authSlice = createSlice({
   name: "auth",
@@ -59,6 +59,22 @@ export function loginUser(data) {
         localStorage.setItem("token", response.data.token);
         window.location.href = "/";
       }
+    } catch (error) {
+      alert("Something went wrong!");
+      dispatch(setStatus(STATUSES.ERROR));
+    }
+  };
+}
+
+// slice for fetching Profile
+export function fetchProfile(data) {
+  return async function fetchProfileThunk(dispatch) {
+    dispatch(setStatus(STATUSES.LOADING));
+    try {
+      const response = await APIAuthenticated.get("/profile/");
+      // console.log(response.data.data, "Hello");
+      dispatch(setUser(response.data.data));
+      dispatch(setStatus(STATUSES.SUCCESS));
     } catch (error) {
       alert("Something went wrong!");
       dispatch(setStatus(STATUSES.ERROR));
